@@ -10,6 +10,23 @@
 - bcrypt
 - jsonwebtoken
 
+## Backend routes
+
+- user routes
+  | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
+  | ----------- | ----- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- |
+  | POST | `/register` | Public | {username, password} | 201 | 401 | create new user |
+  | post | `/logIn` | Public | { nameOrEmail, password } | 200 | 400, 404 | check if user is exists then return token with user information |
+  | POST | `/user/verify/:id` |Public | (empty) | 200 | 400 | verifying user account |
+  | POST | `/forgetPass` | Public | { email } | 200 | 400 | send reset password link to the user email |
+  | post | `/setPass` | Public | { newPassword } | 200 | 400 | reset user password to new password |
+
+- role routes
+  | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
+  | ----------- | ----- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- |
+  | POST | `/createRole` | Private `Authentication & Authorization` | { role, permissions } | 201 | 400 | create new role |
+  | GET | `/getRole` | Private `Authentication & Authorization`| { name, email, password, role } | 200 | 400 | show all role in the database |
+
 ## Models
 
 - user model
@@ -86,13 +103,12 @@
 
 ## Diagrams
 
-### UML Diagrams
-
- <img src="./server-UML.drawio.png" alt="UML Diagram" />
-
 ### ER Diagrams
 
  <img src="./ER-digram.drawio.png" alt="ER Diagram" />
+### UML Diagrams
+
+ <img src="./server-UML.drawio.png" alt="UML Diagram" />
 
 ## Links
 
