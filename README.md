@@ -20,13 +20,13 @@
 | email      | String          | required, unique | n/a           |
 | password   | String          | required         | n/a           |
 | roles      | Schema <roles>  | required         | n/a           |
-| isBocked   | Boolean         |                  | false         |
-| headline   | String          |                  | n/a           |
-| about      | String          |                  | n/a           |
-| course     | Schema <course> |                  | n/a           |
-| enrole     | Schema <course> |                  | n/a           |
-| lessons    | Array           |                  | n/a           |
-| isVerified | Boolean         |                  | false         |
+| isBocked   | Boolean         | n/a              | false         |
+| headline   | String          | n/a              | n/a           |
+| about      | String          | n/a              | n/a           |
+| course     | Schema <course> | n/a              | n/a           |
+| enrole     | Schema <course> | n/a              | n/a           |
+| lessons    | Array           | n/a              | n/a           |
+| isVerified | Boolean         | n/a              | false         |
 
 - roles model
 
@@ -43,10 +43,10 @@
 | description | String            | required | n/a           |
 | creator     | Schema <user>     | required | n/a           |
 | category    | String            | required | n/a           |
-| comments    | Schema <comment>  |          | n/a           |
-| reviews     | Schema <review>   |          | n/a           |
-| questions   | Schema <question> |          | n/a           |
-| isBocked    | Boolean           |          | false         |
+| comments    | Schema <comment>  | n/a      | n/a           |
+| reviews     | Schema <review>   | n/a      | n/a           |
+| questions   | Schema <question> | n/a      | n/a           |
+| isBocked    | Boolean           | n/a      | false         |
 
 - comments model
 
@@ -55,7 +55,7 @@
 | creator     | Schema <user>   | required | n/a           |
 | description | String          | required | n/a           |
 | reference   | Schema <course> | required | n/a           |
-| isBocked    | Boolean         |          | false         |
+| isBocked    | Boolean         | n/a      | false         |
 
 - reviews model
 
@@ -65,7 +65,7 @@
 | description | String          | required | n/a           |
 | rating      | Number          | required | n/a           |
 | reference   | Schema <course> | required | n/a           |
-| isBocked    | Boolean         |          | false         |
+| isBocked    | Boolean         | n/a      | false         |
 
 - questions model
 
@@ -74,7 +74,7 @@
 | creator     | Schema <user>   | required | n/a           |
 | description | String          | required | n/a           |
 | reference   | Schema <course> | required | n/a           |
-| isBocked    | Boolean         |          | false         |
+| isBocked    | Boolean         | n/a      | false         |
 
 - chate model
 
