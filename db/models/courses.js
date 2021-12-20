@@ -4,7 +4,7 @@ const courses = new mongoose.Schema({
   title: { type: String, required: true },
   about: { type: String, required: true },
   description: { type: String, required: true },
-  creator: { type: mongoose.Schema.Types.ObjectId, ref: Users },
+  creator: { type: mongoose.Schema.Types.ObjectId, ref: Users, required: true },
   category: { type: String, required: true },
   comments: { type: mongoose.Schema.Types.String, ref: Comments },
   reviews: { type: mongoose.Schema.Types.String, ref: reviews },
