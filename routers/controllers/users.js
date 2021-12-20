@@ -1,13 +1,13 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
+const usersModel = require("./../../db/models/users");
+
 const SALT = Number(process.env.SALT);
-const SECRET = process.env.SECRETKEY;
 
 const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password } = req.body;
 
     const savedEmail = email.toLowerCase();
     const savedPassword = await bcrypt.hash(password, SALT);
@@ -16,15 +16,11 @@ const register = async (req, res) => {
       name,
       email: savedEmail,
       password: savedPassword,
-      role,
     });
 
     newUser
       .save()
       .then(async (result) => {
-        const message = `${process.env.BASE_URL}/user/verify/${newUser._id}`;
-        await sendEmail(newUser.email, "Verify Email", message);
-
         res.status(201).json(result);
       })
       .catch((err) => {

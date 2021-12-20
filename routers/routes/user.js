@@ -1,10 +1,10 @@
 const express = require("express");
 
+const { register } = require("./../controllers/users");
+
 const userRouter = express.Router();
 
-userRouter.post("/register", (req, res) => {
-  res.send("success");
-});
+userRouter.post("/register", register);
 
 userRouter.get("/login", (req, res) => {
   try {
