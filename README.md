@@ -12,7 +12,7 @@
 
 ## Models
 
-- user model
+- users model
 
 | key        | type            | options          | default value |
 | ---------- | --------------- | ---------------- | ------------- |
@@ -34,7 +34,7 @@
 | ---- | ------ | ---------------- | ------------- |
 | role | String | required, unique | n/a           |
 
-- course model
+- courses model
 
 | key         | type              | options  | default value |
 | ----------- | ----------------- | -------- | ------------- |
@@ -76,7 +76,7 @@
 | reference   | Schema <course> | required | n/a           |
 | isBocked    | Boolean         | n/a      | false         |
 
-- chate model
+- chats model
 
 | key      | type             | options  | default value |
 | -------- | ---------------- | -------- | ------------- |
