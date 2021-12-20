@@ -5,14 +5,14 @@ require("dotenv").config();
 
 require("./db");
 
+const userRouter = require("./routers/routes/user");
+
 const app = express();
 app.use(express.json());
 app.use(cors());
 app.use(morgan("dev"));
 
-app.get("/", (req, res) => {
-  res.send("hello world");
-});
+app.use("/user", userRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
