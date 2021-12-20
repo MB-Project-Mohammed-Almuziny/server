@@ -88,4 +88,29 @@ const logIn = (req, res) => {
   }
 };
 
-module.exports = { register, logIn };
+const setting = (req, res) => {
+  try {
+    const userId = req.params.userId;
+    const { name, headline, about, avatar } = req.body;
+
+    const update = {};
+
+    if (name) update.name = name;
+    if (headline) update.heading = headline;
+    if (about) update.about = about;
+    if (avatar) update.avatar = avatar;
+
+    usersModel
+      .findByIdAndUpdate(userId, update, { new: true })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = { register, logIn, setting };
