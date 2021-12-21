@@ -6,6 +6,9 @@ const authentication = require("./../middlewares/authentication");
 const userRouter = express.Router();
 
 userRouter.post("/register", register);
+userRouter.get("/verify/:token", (req, res) => {
+  res.send("success");
+});
 userRouter.post("/login", logIn);
 userRouter.put("/:userId", authentication, setting);
 
