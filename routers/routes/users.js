@@ -13,6 +13,9 @@ const userRouter = express.Router();
 userRouter.post("/register", register);
 userRouter.get("/verify/:token", verifyUser);
 userRouter.post("/login", logIn);
+userRouter.post("/forgetPass", (req, res) => {
+  res.send("success");
+});
 userRouter.put("/:userId", authentication, setting);
 
 module.exports = userRouter;
