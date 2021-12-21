@@ -12,7 +12,7 @@ const users = new mongoose.Schema({
   role: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Roles",
-    default: "61a735c3931d13080ac69fef",
+    default: "61c180abb4d7969ff7b3683a",
   },
   headline: { type: String },
   about: { type: String },
