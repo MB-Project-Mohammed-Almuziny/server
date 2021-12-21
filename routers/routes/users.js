@@ -16,5 +16,8 @@ userRouter.get("/verify/:token", verifyUser);
 userRouter.post("/login", logIn);
 userRouter.post("/forgetPass", authentication, forgetPassword);
 userRouter.put("/:userId", authentication, setting);
+userRouter.get("/info/:userId", authentication, (req, res) => {
+  res.send("success");
+});
 
 module.exports = userRouter;
