@@ -47,7 +47,7 @@ const logIn = (req, res) => {
         isBlocked: false,
         // isVerified: true,
       })
-      // .populate("role")
+      .populate("role")
       .then(async (result) => {
         if (result) {
           if (result.email === savedEmail || result.name === nameOrEmail) {
@@ -58,7 +58,7 @@ const logIn = (req, res) => {
 
             if (savedPassword || result.name === nameOrEmail) {
               const payload = {
-                // role: result.role,
+                role: result.role,
                 id: result._id,
               };
 
