@@ -24,7 +24,7 @@ const users = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "Courses",
   },
-  verified: { type: Boolean, default: false },
+  isVerified: { type: Boolean, default: false },
   isBocked: { type: Boolean, default: false },
 });
 
