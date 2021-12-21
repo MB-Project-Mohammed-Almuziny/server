@@ -201,6 +201,21 @@ const getUserInfo = (req, res) => {
   }
 };
 
+const blockUser = (req, res) => {
+  try {
+    usersModel
+      .findByIdAndUpdate(req.params.userId, { isBocked: true }, { new: true })
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   register,
   verifyUser,
@@ -208,4 +223,5 @@ module.exports = {
   forgetPassword,
   setting,
   getUserInfo,
+  blockUser,
 };
