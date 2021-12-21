@@ -6,6 +6,7 @@ const {
   logIn,
   forgetPassword,
   setting,
+  getUserInfo,
 } = require("./../controllers/users");
 const authentication = require("./../middlewares/authentication");
 
@@ -16,8 +17,6 @@ userRouter.get("/verify/:token", verifyUser);
 userRouter.post("/login", logIn);
 userRouter.post("/forgetPass", authentication, forgetPassword);
 userRouter.put("/:userId", authentication, setting);
-userRouter.get("/info/:userId", authentication, (req, res) => {
-  res.send("success");
-});
+userRouter.get("/info/:userId", authentication, getUserInfo);
 
 module.exports = userRouter;

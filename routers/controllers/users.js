@@ -175,4 +175,37 @@ const setting = (req, res) => {
   }
 };
 
-module.exports = { register, verifyUser, logIn, forgetPassword, setting };
+const getUserInfo = (req, res) => {
+  try {
+    const userId = req.params.userId;
+
+    usersModel
+      .findById(userId)
+      .then((result) => {
+        const info = (({ name, email, headline, about, course, enrole }) => ({
+          name,
+          email,
+          headline,
+          about,
+          course,
+          enrole,
+        }))(result);
+
+        res.status(200).json(info);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = {
+  register,
+  verifyUser,
+  logIn,
+  forgetPassword,
+  setting,
+  getUserInfo,
+};
