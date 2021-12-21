@@ -21,4 +21,19 @@ const createRole = (req, res) => {
   }
 };
 
-module.exports = { createRole };
+const getRoles = (req, res) => {
+  try {
+    rolesModel
+      .find()
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = { createRole, getRoles };
