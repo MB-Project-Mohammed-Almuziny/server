@@ -119,6 +119,37 @@ const logIn = (req, res) => {
   }
 };
 
+const forgetPassword = (req, res) => {
+  try {
+    const { email } = req.body;
+
+    usersModel
+      .findOne({ email: email, isVerified: true, isBlocked: false })
+      .then(async (result) => {
+        if (result) {
+          const payload = {
+            id: result._id,
+          };
+
+          const options = {
+            expiresIn: "60m",
+          };
+
+          const token = await jwt.sign(payload, SECRET, options);
+
+          const message = `http://localhost:3000/Resetpass/${token}`;
+          await sendEmail(email, "Reset password", message);
+        }
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 const setting = (req, res) => {
   try {
     const userId = req.params.userId;
@@ -144,4 +175,4 @@ const setting = (req, res) => {
   }
 };
 
-module.exports = { register, verifyUser, logIn, setting };
+module.exports = { register, verifyUser, logIn, forgetPassword, setting };
