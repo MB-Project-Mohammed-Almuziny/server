@@ -2,9 +2,14 @@ const coursesModel = require("./../../db/models/courses");
 
 const getAllCourses = (req, res) => {
   try {
-    coursesModel.find({ isBocked: false }).then((result) => {
-      res.status(200).json(result);
-    });
+    coursesModel
+      .find({ isBocked: false })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ err: err.message });
+      });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -35,4 +40,21 @@ const createCourse = (req, res) => {
   }
 };
 
-module.exports = { getAllCourses, createCourse };
+const coursesSearch = (req, res) => {
+  try {
+    const regexTerm = new RegExp(req.params.term);
+
+    coursesModel
+      .find({ title: regexTerm, isBocked: false })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ err: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = { getAllCourses, createCourse, coursesSearch };
