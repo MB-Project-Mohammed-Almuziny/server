@@ -13,6 +13,9 @@ const coursesRouter = express.Router();
 coursesRouter.get("/", getAllCourses);
 coursesRouter.post("/", authentication, createCourse);
 coursesRouter.get("/search/:term", coursesSearch);
+coursesRouter.get("/category/:category", (req, res) => {
+  res.send("success");
+});
 coursesRouter.get("/:courseId", getCourseById);
 
 module.exports = coursesRouter;
