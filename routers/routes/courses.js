@@ -6,6 +6,7 @@ const {
   coursesSearch,
   getCourseByCategory,
   getCourseById,
+  updateCourseById,
 } = require("./../controllers/courses");
 const authentication = require("./../middlewares/authentication");
 
@@ -16,8 +17,6 @@ coursesRouter.post("/", authentication, createCourse);
 coursesRouter.get("/search/:term", coursesSearch);
 coursesRouter.get("/category/:category", getCourseByCategory);
 coursesRouter.get("/:courseId", getCourseById);
-coursesRouter.put("/:courseId", authentication, (req, res) => {
-  res.send("success");
-});
+coursesRouter.put("/:courseId", authentication, updateCourseById);
 
 module.exports = coursesRouter;

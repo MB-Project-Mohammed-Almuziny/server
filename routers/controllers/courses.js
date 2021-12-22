@@ -91,10 +91,33 @@ const getCourseById = (req, res) => {
   }
 };
 
+const updateCourseById = (req, res) => {
+  try {
+    const { title, about, description } = req.body;
+
+    const update = {};
+    if (title) update.title = title;
+    if (about) update.about = about;
+    if (description) update.description = description;
+
+    coursesModel
+      .findByIdAndUpdate(req.params.courseId, update, { new: true })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getAllCourses,
   createCourse,
   coursesSearch,
   getCourseByCategory,
   getCourseById,
+  updateCourseById,
 };
