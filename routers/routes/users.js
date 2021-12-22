@@ -5,6 +5,7 @@ const {
   verifyUser,
   logIn,
   forgetPassword,
+  changePassword,
   setting,
   getUserInfo,
   blockUser,
@@ -18,6 +19,7 @@ userRouter.post("/register", register);
 userRouter.get("/verify/:token", verifyUser);
 userRouter.post("/login", logIn);
 userRouter.post("/forgetPass", authentication, forgetPassword);
+userRouter.post("/changePassword", authentication, changePassword);
 userRouter.put("/:userId", authentication, setting);
 userRouter.get("/info/:userId", authentication, getUserInfo);
 userRouter.put("/block/:userId", authentication, authorization, blockUser);

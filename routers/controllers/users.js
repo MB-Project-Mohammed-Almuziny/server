@@ -87,7 +87,7 @@ const logIn = (req, res) => {
               result.password
             );
 
-            if (savedPassword || result.name === nameOrEmail) {
+            if (savedPassword) {
               const payload = {
                 role: result.role,
                 id: result._id,
@@ -144,6 +144,25 @@ const forgetPassword = (req, res) => {
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+const changePassword = async (req, res) => {
+  try {
+    const { newPassword } = req.body;
+
+    const savedPassword = await bcrypt.hash(newPassword, SALT);
+
+    usersModel
+      .findByIdAndUpdate(req.token.id, { password: savedPassword })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
       });
   } catch (err) {
     res.status(400).json({ error: err.message });
@@ -221,6 +240,7 @@ module.exports = {
   verifyUser,
   logIn,
   forgetPassword,
+  changePassword,
   setting,
   getUserInfo,
   blockUser,

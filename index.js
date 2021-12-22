@@ -7,6 +7,7 @@ require("./db");
 
 const userRouter = require("./routers/routes/users");
 const rolesRouter = require("./routers/routes/roles");
+const coursesRouter = require("./routers/routes/courses");
 
 const app = express();
 app.use(express.json());
@@ -15,6 +16,7 @@ app.use(morgan("dev"));
 
 app.use("/user", userRouter);
 app.use(rolesRouter);
+app.use("/course", coursesRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
