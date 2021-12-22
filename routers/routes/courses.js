@@ -7,6 +7,7 @@ const {
   getCourseByCategory,
   getCourseById,
   updateCourseById,
+  blockCourse,
 } = require("./../controllers/courses");
 const authentication = require("./../middlewares/authentication");
 const authorization = require("./../middlewares/authorization");
@@ -23,9 +24,7 @@ coursesRouter.put(
   "/block/:courseId",
   authentication,
   authorization,
-  (req, res) => {
-    res.send("success");
-  }
+  blockCourse
 );
 
 module.exports = coursesRouter;

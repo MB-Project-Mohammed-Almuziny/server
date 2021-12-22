@@ -113,6 +113,21 @@ const updateCourseById = (req, res) => {
   }
 };
 
+const blockCourse = (req, res) => {
+  try {
+    coursesModel
+      .findByIdAndUpdate(req.params.courseId, { isBocked: true }, { new: true })
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 module.exports = {
   getAllCourses,
   createCourse,
@@ -120,4 +135,5 @@ module.exports = {
   getCourseByCategory,
   getCourseById,
   updateCourseById,
+  blockCourse,
 };
