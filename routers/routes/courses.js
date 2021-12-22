@@ -16,5 +16,8 @@ coursesRouter.post("/", authentication, createCourse);
 coursesRouter.get("/search/:term", coursesSearch);
 coursesRouter.get("/category/:category", getCourseByCategory);
 coursesRouter.get("/:courseId", getCourseById);
+coursesRouter.put("/:courseId", authentication, (req, res) => {
+  res.send("success");
+});
 
 module.exports = coursesRouter;
