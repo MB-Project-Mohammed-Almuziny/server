@@ -57,6 +57,24 @@ const coursesSearch = (req, res) => {
   }
 };
 
+const getCourseByCategory = (req, res) => {
+  try {
+    const category = req.params.category;
+
+    coursesModel
+      .find({ category, isBocked: false })
+      .then((result) => {
+        if (result && result[0]) res.status(200).json(result);
+        else res.status(404).json({ error: " course not found" });
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
 const getCourseById = (req, res) => {
   try {
     coursesModel
@@ -73,4 +91,10 @@ const getCourseById = (req, res) => {
   }
 };
 
-module.exports = { getAllCourses, createCourse, coursesSearch, getCourseById };
+module.exports = {
+  getAllCourses,
+  createCourse,
+  coursesSearch,
+  getCourseByCategory,
+  getCourseById,
+};
