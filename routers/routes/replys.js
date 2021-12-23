@@ -1,11 +1,10 @@
 const express = require("express");
 
+const { addReply } = require("./../controllers/replys");
 const authentication = require("./../middlewares/authentication");
 
 const replysRouter = express.Router();
 
-replysRouter.post("/", authentication, (req, res) => {
-  res.send("success");
-});
+replysRouter.post("/", authentication, addReply);
 
 module.exports = replysRouter;
