@@ -199,18 +199,20 @@ const getUserInfo = (req, res) => {
     const userId = req.params.userId;
 
     usersModel
-      .findById(userId)
+      .find({ _id: userId, isBocked: false })
       .then((result) => {
-        const info = (({ name, email, headline, about, course, enrole }) => ({
-          name,
-          email,
-          headline,
-          about,
-          course,
-          enrole,
-        }))(result);
+        if (result && result[0]) {
+          const info = (({ name, email, headline, about, course, enrole }) => ({
+            name,
+            email,
+            headline,
+            about,
+            course,
+            enrole,
+          }))(result[0]);
 
-        res.status(200).json(info);
+          res.status(200).json(info);
+        } else res.status(404).json({ error: "user not found" });
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
