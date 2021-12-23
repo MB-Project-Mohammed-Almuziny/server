@@ -1,11 +1,10 @@
 const express = require("express");
 
+const { addcomment } = require("./../controllers/comments");
 const authentication = require("./../middlewares/authentication");
 
 const commentsRouter = express.Router();
 
-commentsRouter.post("/", authentication, (req, res) => {
-  res.send("success");
-});
+commentsRouter.post("/", authentication, addcomment);
 
 module.exports = commentsRouter;
