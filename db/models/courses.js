@@ -10,6 +10,7 @@ const courses = new mongoose.Schema({
     required: true,
   },
   category: { type: String, required: true },
+  lessons: [{ type: String }],
   comments: [{ type: mongoose.Schema.Types.String, ref: "Comments" }],
   reviews: [{ type: mongoose.Schema.Types.String, ref: "reviews" }],
   isBocked: { type: Boolean, default: false },
