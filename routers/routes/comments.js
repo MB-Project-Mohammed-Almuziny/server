@@ -6,5 +6,8 @@ const authentication = require("./../middlewares/authentication");
 const commentsRouter = express.Router();
 
 commentsRouter.post("/", authentication, addcomment);
+commentsRouter.get("/:commentId", authentication, (req, res) => {
+  res.send("success");
+});
 
 module.exports = commentsRouter;
