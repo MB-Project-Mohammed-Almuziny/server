@@ -75,6 +75,22 @@ const getCourseByCategory = (req, res) => {
   }
 };
 
+const addLesson = (req, res) => {
+  try {
+    const { courseId, lesson } = req.body;
+
+    coursesModel
+      .findByIdAndUpdate(
+        courseId,
+        { $push: { lessons: lesson } },
+        { new: true }
+      )
+      .then((result) => res.status(200).json(result));
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 const getCourseById = (req, res) => {
   try {
     coursesModel
@@ -133,6 +149,7 @@ module.exports = {
   createCourse,
   coursesSearch,
   getCourseByCategory,
+  addLesson,
   getCourseById,
   updateCourseById,
   blockCourse,
