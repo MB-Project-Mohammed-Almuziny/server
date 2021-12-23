@@ -29,7 +29,7 @@ const getReplyById = (req, res) => {
       .find({ _id: req.params.replyId, isBocked: false })
       .then((result) => {
         if (result && result[0]) res.status(200).json(result);
-        else res.status(404).json({ error: " comment not found" });
+        else res.status(404).json({ error: " reply not found" });
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
