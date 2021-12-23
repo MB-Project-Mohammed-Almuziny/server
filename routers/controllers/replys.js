@@ -39,4 +39,19 @@ const getReplyById = (req, res) => {
   }
 };
 
-module.exports = { addReply, getReplyById };
+const blockReply = (req, res) => {
+  try {
+    replysModel
+      .findByIdAndUpdate(req.params.replyId, { isBocked: true }, { new: true })
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = { addReply, getReplyById, blockReply };
