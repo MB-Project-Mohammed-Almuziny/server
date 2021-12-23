@@ -43,7 +43,7 @@ const sendMessage = (req, res) => {
 const getUserChats = (req, res) => {
   try {
     const { userId } = req.params;
-    
+
     chatsModel
       .find({ $or: [{ user1: userId }, { user1: userId }] })
       .then((result) => {
@@ -57,4 +57,20 @@ const getUserChats = (req, res) => {
   }
 };
 
-module.exports = { sendMessage, getUserChats };
+const getChatById = (req, res) => {
+  try {
+    chatsModel
+      .findById(req.params.chatId)
+      .then((result) => {
+        if (result) res.status(200).json(result);
+        else res.status(404).json({ error: " chat not found" });
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
+module.exports = { sendMessage, getUserChats, getChatById };
