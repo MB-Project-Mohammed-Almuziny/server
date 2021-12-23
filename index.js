@@ -9,6 +9,7 @@ const userRouter = require("./routers/routes/users");
 const rolesRouter = require("./routers/routes/roles");
 const coursesRouter = require("./routers/routes/courses");
 const commentsRouter = require("./routers/routes/comments");
+const replysRouter = require("./routers/routes/replys");
 
 const app = express();
 app.use(express.json());
@@ -19,6 +20,7 @@ app.use("/user", userRouter);
 app.use(rolesRouter);
 app.use("/course", coursesRouter);
 app.use("/comments", commentsRouter);
+app.use("/replys", replysRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
