@@ -2,31 +2,31 @@
 
 ## used library
 
-- express
-- cors
-- morgan
-- dotenv
-- mongoose
-- bcrypt
-- jsonwebtoken
+- [express](https://www.npmjs.com/package/express)
+- [cors](https://www.npmjs.com/package/cors)
+- [morgan](https://www.npmjs.com/package/morgan)
+- [dotenv](https://www.npmjs.com/package/dotenv)
+- [mongoose](https://www.npmjs.com/package//mongoose)
+- [bcrypt](https://www.npmjs.com/package/bcryptjs)
+- [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
+- [nodemailer](https://www.npmjs.com/package/nodemailer)
 
 ## Models
 
 - users model
 
-| key        | type            | options          | default value |
-| ---------- | --------------- | ---------------- | ------------- |
-| name       | String          | required, unique | n/a           |
-| email      | String          | required, unique | n/a           |
-| password   | String          | required         | n/a           |
-| roles      | Schema <roles>  | required         | n/a           |
-| isBocked   | Boolean         | n/a              | false         |
-| headline   | String          | n/a              | n/a           |
-| about      | String          | n/a              | n/a           |
-| course     | Schema <course> | n/a              | n/a           |
-| enrole     | Schema <course> | n/a              | n/a           |
-| lessons    | Array           | n/a              | n/a           |
-| isVerified | Boolean         | n/a              | false         |
+| key        | type                | options          | default value |
+| ---------- | ------------------- | ---------------- | ------------- |
+| name       | String              | required, unique | n/a           |
+| email      | String              | required, unique | n/a           |
+| password   | String              | required         | n/a           |
+| roles      | Schema <roles>      | required         | n/a           |
+| headline   | String              | n/a              | n/a           |
+| about      | String              | n/a              | n/a           |
+| course     | [ Schema <course> ] | n/a              | n/a           |
+| enrole     | [ Schema <course> ] | n/a              | n/a           |
+| isVerified | Boolean             | n/a              | false         |
+| isBocked   | Boolean             | n/a              | false         |
 
 - roles model
 
@@ -36,26 +36,27 @@
 
 - courses model
 
-| key         | type              | options  | default value |
-| ----------- | ----------------- | -------- | ------------- |
-| title       | String            | required | n/a           |
-| about       | String            | required | n/a           |
-| description | String            | required | n/a           |
-| creator     | Schema <user>     | required | n/a           |
-| category    | String            | required | n/a           |
-| comments    | Schema <comment>  | n/a      | n/a           |
-| reviews     | Schema <review>   | n/a      | n/a           |
-| questions   | Schema <question> | n/a      | n/a           |
-| isBocked    | Boolean           | n/a      | false         |
+| key         | type                 | options  | default value |
+| ----------- | -------------------- | -------- | ------------- |
+| title       | String               | required | n/a           |
+| about       | String               | required | n/a           |
+| description | String               | required | n/a           |
+| creator     | Schema <user>        | required | n/a           |
+| category    | String               | required | n/a           |
+| lessons     | [ String ]           | n/a      | n/a           |
+| comments    | [ Schema <comment> ] | n/a      | n/a           |
+| reviews     | [ Schema <review> ]  | n/a      | n/a           |
+| isBocked    | Boolean              | n/a      | false         |
 
 - comments model
 
-| key         | type            | options  | default value |
-| ----------- | --------------- | -------- | ------------- |
-| creator     | Schema <user>   | required | n/a           |
-| description | String          | required | n/a           |
-| reference   | Schema <course> | required | n/a           |
-| isBocked    | Boolean         | n/a      | false         |
+| key         | type               | options  | default value |
+| ----------- | ------------------ | -------- | ------------- |
+| creator     | Schema <user>      | required | n/a           |
+| description | String             | required | n/a           |
+| reference   | Schema <course>    | required | n/a           |
+| reply       | [ Schema <reply> ] | n/a      | n/a           |
+| isBocked    | Boolean            | n/a      | false         |
 
 - reviews model
 
@@ -67,14 +68,14 @@
 | reference   | Schema <course> | required | n/a           |
 | isBocked    | Boolean         | n/a      | false         |
 
-- questions model
+- replys model
 
-| key         | type            | options  | default value |
-| ----------- | --------------- | -------- | ------------- |
-| creator     | Schema <user>   | required | n/a           |
-| description | String          | required | n/a           |
-| reference   | Schema <course> | required | n/a           |
-| isBocked    | Boolean         | n/a      | false         |
+| key         | type              | options  | default value |
+| ----------- | ----------------- | -------- | ------------- |
+| creator     | Schema <user>     | required | n/a           |
+| description | String            | required | n/a           |
+| reference   | Schema <comments> | required | n/a           |
+| isBocked    | Boolean           | n/a      | false         |
 
 - chats model
 
@@ -97,7 +98,7 @@
   | post | `/logIn` | Public | { nameOrEmail, password } | 200 | 400, 404 | check if user is exists then return token with user information |
   | POST | `/user/verify/:id` |Public | n/a | 200 | 400 | verifying user account |
   | POST | `/forgetPass` | Public | { email } | 200 | 400 | send reset password link to the user email |
-  | post | `/setPass` | Public | { newPassword } | 200 | 400 | reset user password to new password |
+  | post | `/changePassword` | Private `Authentication` | { newPassword } | 200 | 400 | reset user password to new password |
   | PUT | `/:userId` | Private `Authentication` | { name or headline or about or avatar or password } | 200 | 400 | change user info or password or avatar |
   | GET | `/info/:userid` | Private `Authentication` | n/a | 200 | 400 | get user information |
   | PUT | `/block/:courseId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a user by id |
@@ -116,14 +117,14 @@
   | GET | `/search/:term` | Public | n/a | 200 | 400 | get courses by search term |
   | GET | `/category/:category` | Public | n/a | 200 | 400 | get courses by category |
   | GET | `/:courseId` | Public | n/a | 200 | 400 | get courses by id |
-  | POST | `/addcomment` | Private `Authentication` | { creator, description, reference } | 201 | 400 | add new comment to a course |
   | PUT | `/:courseId` | Private `Authentication` | { title or about or description } | 200 | 400 | update a course |
-  | POST | `/addLesson` | Private `Authentication` | { lesson } | 201 | 400 | add new lesson to a course |
+  | POST | `/addLesson` | Private `Authentication` | { courseId, lesson } | 201 | 400 | add new lesson to a course |
   | PUT | `/block/:courseId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a course by id |
 
 - Comments routes
   | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
   | ----------- | ----- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- |
+  | POST | `/` | Private `Authentication` | {creator, description, reference } | 201 | 400 | add comment to course |
   | GET | `/:commentId` | Private `Authentication` | n/a | 200 | 400 | get comment by id |
   | PUT | `/block/:commentId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a course by id |
 

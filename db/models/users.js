@@ -16,14 +16,18 @@ const users = new mongoose.Schema({
   },
   headline: { type: String },
   about: { type: String },
-  course: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Courses",
-  },
-  enrole: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Courses",
-  },
+  course: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Courses",
+    },
+  ],
+  enrole: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Courses",
+    },
+  ],
   isVerified: { type: Boolean, default: false },
   isBocked: { type: Boolean, default: false },
 });
