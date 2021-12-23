@@ -39,4 +39,23 @@ const getCommentById = (req, res) => {
   }
 };
 
-module.exports = { addcomment, getCommentById };
+const blockComment = (req, res) => {
+  try {
+    commentModel
+      .findByIdAndUpdate(
+        req.params.commentId,
+        { isBocked: true },
+        { new: true }
+      )
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = { addcomment, getCommentById, blockComment };
