@@ -40,4 +40,21 @@ const sendMessage = (req, res) => {
   }
 };
 
-module.exports = { sendMessage };
+const getUserChats = (req, res) => {
+  try {
+    const { userId } = req.params;
+    
+    chatsModel
+      .find({ $or: [{ user1: userId }, { user1: userId }] })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ message: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = { sendMessage, getUserChats };
