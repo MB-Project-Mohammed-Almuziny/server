@@ -135,6 +135,13 @@
   | GET | `/:replyId` | Private `Authentication` | n/a | 200 | 400 | get reply by id |
   | PUT | `/block/:replyId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a reply by id |
 
+- Chats routes
+  | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
+  | ----------- | --- | ----------- | ------------ | -------------- | ------------ | ----------- |
+  | POST | `/` | Private `Authentication` | { sender, receiver, content } | 201 | 400 | send message from user to another |
+  | GET | `/:chatId` | Private `Authentication` | n/a | 200 | 400 | get chat by id |
+  | GET | `/user/:userId` | Private `Authentication` | n/a | 200 | 400 | get all user's chats for hem |
+
 ## UML Diagrams
 
  <img src="./server-UML.drawio.png" alt="UML Diagram" />
