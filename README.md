@@ -98,7 +98,7 @@
   | post | `/logIn` | Public | { nameOrEmail, password } | 200 | 400, 404 | check if user is exists then return token with user information |
   | POST | `/user/verify/:id` |Public | n/a | 200 | 400 | verifying user account |
   | POST | `/forgetPass` | Public | { email } | 200 | 400 | send reset password link to the user email |
-  | post | `/changePassword` | Private `Authentication` | { newPassword } | 200 | 400 | reset user password to new password |
+  | POST | `/changePassword` | Private `Authentication` | { newPassword } | 200 | 400 | reset user password to new password |
   | PUT | `/:userId` | Private `Authentication` | { name or headline or about or avatar or password } | 200 | 400 | change user info or password or avatar |
   | GET | `/info/:userid` | Private `Authentication` | n/a | 200 | 400 | get user information |
   | PUT | `/block/:courseId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a user by id |
@@ -127,6 +127,13 @@
   | POST | `/` | Private `Authentication` | {creator, description, reference } | 201 | 400 | add comment to course |
   | GET | `/:commentId` | Private `Authentication` | n/a | 200 | 400 | get comment by id |
   | PUT | `/block/:commentId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a course by id |
+
+- Replys routes
+  | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
+  | ----------- | --- | ----------- | ------------ | -------------- | ------------ | ----------- |
+  | POST | `/` | Private `Authentication` | {creator, description, reference } | 201 | 400 | replt to a comment |
+  | GET | `/:replyId` | Private `Authentication` | n/a | 200 | 400 | get reply by id |
+  | PUT | `/block/:replyId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a reply by id |
 
 ## UML Diagrams
 
