@@ -79,11 +79,11 @@
 
 - chats model
 
-| key      | type             | options  | default value |
-| -------- | ---------------- | -------- | ------------- |
-| user1    | Schema <user>    | required | n/a           |
-| user2    | Schema <user>    | required | n/a           |
-| messages | array of objects | required | n/a           |
+| key                             | type                       | options  | default value |
+| ------------------------------- | -------------------------- | -------- | ------------- |
+| user1                           | Schema <Users>             | required | n/a           |
+| user2                           | Schema <Users>             | required | n/a           |
+| messages : [{ content, sender}] | [ String, Schema <Users> ] | required | n/a           |
 
 ## ER Diagrams
 
