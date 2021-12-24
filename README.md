@@ -20,11 +20,11 @@
 | name       | String              | required, unique | n/a           |
 | email      | String              | required, unique | n/a           |
 | password   | String              | required         | n/a           |
-| roles      | Schema <roles>      | required         | n/a           |
+| roles      | Schema <Roles>      | required         | n/a           |
 | headline   | String              | n/a              | n/a           |
 | about      | String              | n/a              | n/a           |
-| course     | [ Schema <course> ] | n/a              | n/a           |
-| enrole     | [ Schema <course> ] | n/a              | n/a           |
+| course     | [ Schema <Course> ] | n/a              | n/a           |
+| enrole     | [ Schema <Course> ] | n/a              | n/a           |
 | isVerified | Boolean             | n/a              | false         |
 | isBocked   | Boolean             | n/a              | false         |
 
@@ -41,40 +41,40 @@
 | title       | String               | required | n/a           |
 | about       | String               | required | n/a           |
 | description | String               | required | n/a           |
-| creator     | Schema <user>        | required | n/a           |
+| creator     | Schema <Users>        | required | n/a           |
 | category    | String               | required | n/a           |
 | lessons     | [ String ]           | n/a      | n/a           |
-| comments    | [ Schema <comment> ] | n/a      | n/a           |
-| reviews     | [ Schema <review> ]  | n/a      | n/a           |
+| comments    | [ Schema <Comments> ] | n/a      | n/a           |
+| reviews     | [ Schema <Reviews> ]  | n/a      | n/a           |
 | isBocked    | Boolean              | n/a      | false         |
 
 - comments model
 
 | key         | type               | options  | default value |
 | ----------- | ------------------ | -------- | ------------- |
-| creator     | Schema <user>      | required | n/a           |
+| creator     | Schema <Users>      | required | n/a           |
 | description | String             | required | n/a           |
-| reference   | Schema <course>    | required | n/a           |
-| reply       | [ Schema <reply> ] | n/a      | n/a           |
+| reference   | Schema <Courses>    | required | n/a           |
+| reply       | [ Schema <Replys> ] | n/a      | n/a           |
 | isBocked    | Boolean            | n/a      | false         |
 
 - reviews model
 
 | key         | type            | options  | default value |
 | ----------- | --------------- | -------- | ------------- |
-| creator     | Schema <user>   | required | n/a           |
+| creator     | Schema <Users>   | required | n/a           |
 | description | String          | required | n/a           |
 | rating      | Number          | required | n/a           |
-| reference   | Schema <course> | required | n/a           |
+| reference   | Schema <Courses> | required | n/a           |
 | isBocked    | Boolean         | n/a      | false         |
 
 - replys model
 
 | key         | type              | options  | default value |
 | ----------- | ----------------- | -------- | ------------- |
-| creator     | Schema <user>     | required | n/a           |
+| creator     | Schema <Users>     | required | n/a           |
 | description | String            | required | n/a           |
-| reference   | Schema <comments> | required | n/a           |
+| reference   | Schema <Comments> | required | n/a           |
 | isBocked    | Boolean           | n/a      | false         |
 
 - chats model
@@ -93,7 +93,7 @@
 
 - User routes
   | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
-  | ----------- | ----- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- |
+  | ----------- | --- | ----------- | ------------ | -------------- | ------------ | ----------- |
   | POST | `/register` | Public | { name, password, email } | 201 | 401 | create new user |
   | post | `/logIn` | Public | { nameOrEmail, password } | 200 | 400, 404 | check if user is exists then return token with user information |
   | POST | `/user/verify/:id` |Public | n/a | 200 | 400 | verifying user account |
@@ -105,13 +105,13 @@
 
 - Role routes
   | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
-  | ----------- | ----- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- |
+  | ----------- | --- | ----------- | ------------ | -------------- | ------------ | ----------- |
   | POST | `/createRole` | Private `Authentication & Authorization` | { role } | 201 | 400 | create new role |
   | GET | `/getRole` | Private `Authentication & Authorization`| n/a | 200 | 400 | show all role in the database |
 
 - Course routes
   | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
-  | ----------- | ----- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- |
+  | ----------- | ---- | ---------- | ------------ | -------------- | ------------ |------------ |
   | GET | `/` | Public | n/a | 200 | 400 | get all courses |
   | POST | `/` | Private `Authentication` | { Title, About, Description } | 201 | 400 | create new course |
   | GET | `/search/:term` | Public | n/a | 200 | 400 | get courses by search term |
@@ -123,7 +123,7 @@
 
 - Comments routes
   | HTTP Method | URL | Permissions | Request Body | Success status | Error Status | Description |
-  | ----------- | ----- | --------------------------- | ------------------------------- | -------------- | ------------ | --------------------------------------------------------------- |
+  | ----------- | --- | ----------- | ------------ | -------------- | ------------ | ----------- |
   | POST | `/` | Private `Authentication` | {creator, description, reference } | 201 | 400 | add comment to course |
   | GET | `/:commentId` | Private `Authentication` | n/a | 200 | 400 | get comment by id |
   | PUT | `/block/:commentId` | Private `Authentication & Authorization` | n/a | 200 | 400 | block a course by id |
