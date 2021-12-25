@@ -4,6 +4,7 @@ const getAllCourses = (req, res) => {
   try {
     coursesModel
       .find({ isBocked: false })
+      .populate({ path: "creator", select: "name" })
       .then((result) => {
         res.status(200).json(result);
       })
