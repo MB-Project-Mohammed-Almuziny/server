@@ -119,6 +119,38 @@ const logIn = (req, res) => {
   }
 };
 
+const enrole = (req, res) => {
+  try {
+    let found;
+    const { userId, courseId } = req.body;
+
+    usersModel
+      .findById(userId)
+      .findOne({ enrole: courseId })
+      .then((result) => {
+        if (!result)
+          usersModel
+            .findByIdAndUpdate(
+              userId,
+              { $push: { enrole: courseId } },
+              { new: true }
+            )
+            .then((result) => {
+              res.status(200).json(result);
+            })
+            .catch((err) => {
+              res.status(400).json({ error: err.message });
+            });
+        else res.status(400).json("you already enroled to this corse");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 const forgetPassword = (req, res) => {
   try {
     const { email } = req.body;
@@ -241,6 +273,7 @@ module.exports = {
   register,
   verifyUser,
   logIn,
+  enrole,
   forgetPassword,
   changePassword,
   setting,
