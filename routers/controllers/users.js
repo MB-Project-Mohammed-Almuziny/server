@@ -122,7 +122,6 @@ const logIn = (req, res) => {
 
 const enrole = (req, res) => {
   try {
-    let found;
     const { userId, courseId } = req.body;
 
     usersModel
@@ -244,6 +243,10 @@ const getUserInfo = (req, res) => {
 
     usersModel
       .find({ _id: userId, isBocked: false })
+      .populate({
+        path: "course enrole",
+        populate: { path: "creator", select: "name" },
+      })
       .then((result) => {
         if (result && result[0]) {
           const info = (({ name, email, headline, about, course, enrole }) => ({
