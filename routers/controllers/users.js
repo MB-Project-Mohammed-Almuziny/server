@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const usersModel = require("./../../db/models/users");
+const coursesModel = require("./../../db/models/courses");
 const sendEmail = require("./../../utils/email");
 
 const SALT = Number(process.env.SALT);
@@ -135,8 +136,19 @@ const enrole = (req, res) => {
               { $push: { enrole: courseId } },
               { new: true }
             )
-            .then((result) => {
-              res.status(200).json(result);
+            .then(() => {
+              coursesModel
+                .findByIdAndUpdate(
+                  courseId,
+                  { $push: { students: userId } },
+                  { new: true }
+                )
+                .then((result) => {
+                  res.status(200).json(result);
+                })
+                .catch((err) => {
+                  res.status(400).json({ error: err.message });
+                });
             })
             .catch((err) => {
               res.status(400).json({ error: err.message });

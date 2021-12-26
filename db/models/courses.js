@@ -10,6 +10,7 @@ const courses = new mongoose.Schema({
     required: true,
   },
   category: { type: String, required: true },
+  students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
   lessons: [{ type: String }],
   comments: [{ type: mongoose.Schema.Types.String, ref: "Comments" }],
   reviews: [{ type: mongoose.Schema.Types.String, ref: "reviews" }],
