@@ -221,7 +221,7 @@ const setting = (req, res) => {
     const update = {};
 
     if (name) update.name = name;
-    if (headline) update.heading = headline;
+    if (headline) update.headline = headline;
     if (about) update.about = about;
     if (avatar) update.avatar = avatar;
 
