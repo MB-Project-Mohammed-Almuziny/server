@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 const usersModel = require("./../../db/models/users");
+const coursesModel = require("./../../db/models/courses");
 const sendEmail = require("./../../utils/email");
 
 const SALT = Number(process.env.SALT);
@@ -119,6 +120,48 @@ const logIn = (req, res) => {
   }
 };
 
+const enrole = (req, res) => {
+  try {
+    const { userId, courseId } = req.body;
+
+    usersModel
+      .findById(userId)
+      .findOne({ enrole: courseId })
+      .then((result) => {
+        if (!result)
+          usersModel
+            .findByIdAndUpdate(
+              userId,
+              { $push: { enrole: courseId } },
+              { new: true }
+            )
+            .then(() => {
+              coursesModel
+                .findByIdAndUpdate(
+                  courseId,
+                  { $push: { students: userId } },
+                  { new: true }
+                )
+                .then((result) => {
+                  res.status(200).json(result);
+                })
+                .catch((err) => {
+                  res.status(400).json({ error: err.message });
+                });
+            })
+            .catch((err) => {
+              res.status(400).json({ error: err.message });
+            });
+        else res.status(400).json("you already enroled to this corse");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
 const forgetPassword = (req, res) => {
   try {
     const { email } = req.body;
@@ -177,7 +220,7 @@ const setting = (req, res) => {
     const update = {};
 
     if (name) update.name = name;
-    if (headline) update.heading = headline;
+    if (headline) update.headline = headline;
     if (about) update.about = about;
     if (avatar) update.avatar = avatar;
 
@@ -200,6 +243,10 @@ const getUserInfo = (req, res) => {
 
     usersModel
       .find({ _id: userId, isBocked: false })
+      .populate({
+        path: "course enrole",
+        populate: { path: "creator", select: "name" },
+      })
       .then((result) => {
         if (result && result[0]) {
           const info = (({ name, email, headline, about, course, enrole }) => ({
@@ -241,6 +288,7 @@ module.exports = {
   register,
   verifyUser,
   logIn,
+  enrole,
   forgetPassword,
   changePassword,
   setting,

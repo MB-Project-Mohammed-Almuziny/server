@@ -95,9 +95,10 @@ const addLesson = (req, res) => {
 const getCourseById = (req, res) => {
   try {
     coursesModel
-      .find({ _id: req.params.courseId, isBocked: false })
+      .findById(req.params.courseId, { isBocked: false })
+      .populate({ path: "creator", select: "name" })
       .then((result) => {
-        if (result && result[0]) res.status(200).json(result);
+        if (result) res.status(200).json(result);
         else res.status(404).json({ error: " course not found" });
       })
       .catch((err) => {
