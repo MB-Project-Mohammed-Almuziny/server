@@ -18,9 +18,11 @@ const getAllCourses = (req, res) => {
 
 const createCourse = (req, res) => {
   try {
-    const { title, about, description, creator, category } = req.body;
+    const { thumbnail, title, about, description, creator, category } =
+      req.body;
 
     const newCourse = coursesModel({
+      thumbnail,
       title,
       about,
       description,
@@ -92,6 +94,23 @@ const addLesson = (req, res) => {
   }
 };
 
+const isStudent = (req, res) => {
+  const { courseId, userId } = req.body;
+  try {
+    coursesModel
+      .findById(courseId)
+      .then((result) => {
+        if (result) res.status(200).json(result.students.includes(userId));
+        else res.status(404).json({ error: " course not found" });
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
 const getCourseById = (req, res) => {
   try {
     coursesModel
@@ -152,6 +171,7 @@ module.exports = {
   coursesSearch,
   getCourseByCategory,
   addLesson,
+  isStudent,
   getCourseById,
   updateCourseById,
   blockCourse,

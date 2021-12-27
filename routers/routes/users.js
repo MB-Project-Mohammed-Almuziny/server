@@ -21,7 +21,7 @@ userRouter.get("/verify/:token", verifyUser);
 userRouter.post("/login", logIn);
 userRouter.post("/enrole", enrole);
 userRouter.post("/forgetPass", authentication, forgetPassword);
-userRouter.post("/changePassword", authentication, changePassword);
+userRouter.put("/changePassword", authentication, changePassword);
 userRouter.get("/info/:userId", authentication, getUserInfo);
 userRouter.put("/block/:userId", authentication, authorization, blockUser);
 userRouter.put("/:userId", authentication, setting);
