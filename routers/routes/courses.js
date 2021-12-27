@@ -6,6 +6,7 @@ const {
   coursesSearch,
   getCourseByCategory,
   addLesson,
+  isStudent,
   getCourseById,
   updateCourseById,
   blockCourse,
@@ -20,6 +21,7 @@ coursesRouter.post("/", authentication, createCourse);
 coursesRouter.get("/search/:term", coursesSearch);
 coursesRouter.get("/category/:category", getCourseByCategory);
 coursesRouter.get("/addLesson", authentication, addLesson);
+coursesRouter.post("/isStudent", authentication, isStudent);
 coursesRouter.get("/:courseId", getCourseById);
 coursesRouter.put("/:courseId", authentication, updateCourseById);
 coursesRouter.put(
