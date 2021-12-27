@@ -18,9 +18,11 @@ const getAllCourses = (req, res) => {
 
 const createCourse = (req, res) => {
   try {
-    const { title, about, description, creator, category } = req.body;
+    const { thumbnail, title, about, description, creator, category } =
+      req.body;
 
     const newCourse = coursesModel({
+      thumbnail,
       title,
       about,
       description,
