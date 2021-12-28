@@ -12,7 +12,12 @@ const courses = new mongoose.Schema({
   },
   category: { type: String, required: true },
   students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
-  lessons: [{ type: String }],
+  lessonSections: [
+    {
+      sectionName: { type: String, required: true, unique: true },
+      lessons: [{ type: String }],
+    },
+  ],
   comments: [{ type: mongoose.Schema.Types.String, ref: "Comments" }],
   reviews: [{ type: mongoose.Schema.Types.String, ref: "reviews" }],
   isBocked: { type: Boolean, default: false },

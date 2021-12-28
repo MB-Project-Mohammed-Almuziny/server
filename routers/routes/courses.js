@@ -5,6 +5,7 @@ const {
   createCourse,
   coursesSearch,
   getCourseByCategory,
+  addSection,
   addLesson,
   isStudent,
   getCourseById,
@@ -20,6 +21,7 @@ coursesRouter.get("/", getAllCourses);
 coursesRouter.post("/", authentication, createCourse);
 coursesRouter.get("/search/:term", coursesSearch);
 coursesRouter.get("/category/:category", getCourseByCategory);
+coursesRouter.post("/addSection", authentication, addSection);
 coursesRouter.post("/addLesson", authentication, addLesson);
 coursesRouter.post("/isStudent", authentication, isStudent);
 coursesRouter.get("/:courseId", getCourseById);
