@@ -96,12 +96,12 @@ const addSection = (req, res) => {
 
 const addLesson = (req, res) => {
   try {
-    const { courseId, sectionIndex, lesson } = req.body;
+    const { courseId, sectionIndex, lessonName, lesson } = req.body;
 
     coursesModel.findById(courseId).then((result) => {
       const update = result.lessonSections;
 
-      update[sectionIndex].lessons.push(lesson);
+      update[sectionIndex].lessons.push({ lessonName, lesson });
 
       coursesModel
         .findByIdAndUpdate(courseId, { lessonSections: update }, { new: true })
