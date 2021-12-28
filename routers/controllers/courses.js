@@ -78,17 +78,40 @@ const getCourseByCategory = (req, res) => {
   }
 };
 
-const addLesson = (req, res) => {
+const addSection = (req, res) => {
   try {
-    const { courseId, lesson } = req.body;
+    const { courseId, sectionName } = req.body;
 
     coursesModel
       .findByIdAndUpdate(
         courseId,
-        { $push: { lessons: lesson } },
+        { $push: { lessonSections: { sectionName, lesson: [] } } },
         { new: true }
       )
-      .then((result) => res.status(200).json(result));
+      .then((result) => res.status(201).json(result));
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+const addLesson = (req, res) => {
+  try {
+    const { courseId, sectionIndex, lessonName, lesson } = req.body;
+
+    coursesModel.findById(courseId).then((result) => {
+      const update = result.lessonSections;
+
+      update[sectionIndex].lessons.push({ lessonName, lesson });
+
+      coursesModel
+        .findByIdAndUpdate(courseId, { lessonSections: update }, { new: true })
+        .then((result) => {
+          res.status(201).json(result);
+        })
+        .catch((err) => {
+          res.status(400).json({ error: err.message });
+        });
+    });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -170,6 +193,7 @@ module.exports = {
   createCourse,
   coursesSearch,
   getCourseByCategory,
+  addSection,
   addLesson,
   isStudent,
   getCourseById,
