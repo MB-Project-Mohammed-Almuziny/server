@@ -15,7 +15,12 @@ const courses = new mongoose.Schema({
   lessonSections: [
     {
       sectionName: { type: String, required: true, unique: true },
-      lessons: [{ type: String }],
+      lessons: [
+        {
+          lessonName: { type: String, required: true },
+          lesson: { type: String, required: true },
+        },
+      ],
     },
   ],
   comments: [{ type: mongoose.Schema.Types.String, ref: "Comments" }],
