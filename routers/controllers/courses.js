@@ -67,6 +67,7 @@ const getCourseByCategory = (req, res) => {
 
     coursesModel
       .find({ category, isBocked: false })
+      .populate("comments")
       .then((result) => {
         if (result && result[0]) res.status(200).json(result);
         else res.status(404).json({ error: " course not found" });
@@ -139,7 +140,12 @@ const getCourseById = (req, res) => {
   try {
     coursesModel
       .findById(req.params.courseId, { isBocked: false })
-      .populate({ path: "creator", select: "name" })
+      .populate("comments")
+      .populate({
+        path: "comments",
+        populate: { path: "creator", select: "name avatar" },
+      })
+      .populate({ path: "creator", select: "name avatar" })
       .then((result) => {
         if (result) res.status(200).json(result);
         else res.status(404).json({ error: " course not found" });
