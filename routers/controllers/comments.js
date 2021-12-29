@@ -1,4 +1,5 @@
 const commentModel = require("./../../db/models/comments");
+const coursesModel = require("./../../db/models/courses");
 
 const addcomment = (req, res) => {
   try {
@@ -13,7 +14,21 @@ const addcomment = (req, res) => {
     newComment
       .save()
       .then((result) => {
-        res.status(201).json(result);
+        coursesModel
+          .findByIdAndUpdate(
+            reference,
+            {
+              $push: { comments: result._id },
+            },
+            { new: true }
+          )
+          .populate("comments")
+          .then((result) => {
+            res.status(201).json(result);
+          })
+          .catch((err) => {
+            res.status(400).json({ error: err.message });
+          });
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
