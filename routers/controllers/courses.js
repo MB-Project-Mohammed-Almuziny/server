@@ -143,7 +143,10 @@ const getCourseById = (req, res) => {
       .populate("comments")
       .populate({
         path: "comments",
-        populate: { path: "creator", select: "name avatar" },
+        populate: [
+          { path: "creator", select: "name avatar" },
+          { path: "replays" },
+        ],
       })
       .populate({ path: "creator", select: "name avatar" })
       .then((result) => {
