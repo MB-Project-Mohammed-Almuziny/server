@@ -1,3 +1,4 @@
+const commentModel = require("./../../db/models/comments");
 const replysModel = require("./../../db/models/replys");
 
 const addReply = (req, res) => {
@@ -13,7 +14,21 @@ const addReply = (req, res) => {
     newReply
       .save()
       .then((result) => {
-        res.status(201).json(result);
+        commentModel
+          .findByIdAndUpdate(
+            reference,
+            {
+              $push: { replays: result._id },
+            },
+            { new: true }
+          )
+          .populate("replays")
+          .then((result) => {
+            res.status(201).json(result);
+          })
+          .catch((err) => {
+            res.status(400).json({ error: err.message });
+          });
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });

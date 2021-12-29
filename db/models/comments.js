@@ -12,7 +12,7 @@ const comments = new mongoose.Schema({
     ref: "Courses",
     required: true,
   },
-  replays: [{ type: mongoose.Schema.Types.ObjectId, ref: "comments" }],
+  replays: [{ type: mongoose.Schema.Types.ObjectId, ref: "Replys" }],
   isBocked: { type: Boolean, default: false },
 });
 
