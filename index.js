@@ -11,6 +11,7 @@ const coursesRouter = require("./routers/routes/courses");
 const commentsRouter = require("./routers/routes/comments");
 const replysRouter = require("./routers/routes/replys");
 const chatsRouter = require("./routers/routes/chats");
+const reviewsRouter = require("./routers/routes/reviews");
 
 const app = express();
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use("/course", coursesRouter);
 app.use("/comments", commentsRouter);
 app.use("/replys", replysRouter);
 app.use("/chats", chatsRouter);
+app.use("/reviews", reviewsRouter);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
