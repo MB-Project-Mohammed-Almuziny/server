@@ -4,21 +4,34 @@ const createReview = (req, res) => {
   try {
     const { creator, rating, description, reference } = req.body;
 
-    const newReview = new reviewsModel({
-      creator,
-      rating,
-      description,
-      reference,
-    });
+    reviewsModel.findOne({ creator, reference }).then((result) => {
+      if (result) {
+        reviewsModel
+          .findOneAndUpdate({ creator, reference }, { rating, description })
+          .then((result) => {
+            res.status(200).json(result);
+          })
+          .catch((error) => {
+            res.status(400).json({ error: error });
+          });
+      } else {
+        const newReview = new reviewsModel({
+          creator,
+          rating,
+          description,
+          reference,
+        });
 
-    newReview
-      .save()
-      .then((result) => {
-        res.status(201).json(result);
-      })
-      .catch((err) => {
-        res.status(400).json({ error: err.message });
-      });
+        newReview
+          .save()
+          .then((result) => {
+            res.status(201).json(result);
+          })
+          .catch((err) => {
+            res.status(400).json({ error: err.message });
+          });
+      }
+    });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
@@ -97,7 +110,8 @@ const getUserReview = (req, res) => {
     const { creator, reference } = req.body;
 
     reviewsModel
-      .find({ creator, reference })
+      .findOne({ creator, reference })
+      .populate({ path: "creator", select: "name avatar" })
       .then((result) => {
         res.status(200).json(result);
       })
