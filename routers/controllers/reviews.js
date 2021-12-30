@@ -92,4 +92,21 @@ const getCourseReviews = (req, res) => {
   }
 };
 
-module.exports = { createReview, getCourseReviews };
+const getUserReview = (req, res) => {
+  try {
+    const { creator, reference } = req.body;
+
+    reviewsModel
+      .find({ creator, reference })
+      .then((result) => {
+        res.status(200).json(result);
+      })
+      .catch((err) => {
+        res.status(400).json({ error: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ error: err.message });
+  }
+};
+
+module.exports = { createReview, getUserReview, getCourseReviews };
