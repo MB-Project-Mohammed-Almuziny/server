@@ -68,9 +68,9 @@ const getCourseByCategory = (req, res) => {
     coursesModel
       .find({ category, isBocked: false })
       .populate("comments")
+      .populate({ path: "creator", select: "name" })
       .then((result) => {
-        if (result && result[0]) res.status(200).json(result);
-        else res.status(404).json({ error: " course not found" });
+        res.status(200).json(result);
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
