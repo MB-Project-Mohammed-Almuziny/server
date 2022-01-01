@@ -5,7 +5,7 @@ const getAllCourses = (req, res) => {
     coursesModel
       .find({ isBocked: false })
       .populate("comments")
-      .populate({ path: "creator", select: "name" })
+      .populate({ path: "creator", select: "name avatar" })
       .then((result) => {
         res.status(200).json(result);
       })
@@ -50,6 +50,8 @@ const coursesSearch = (req, res) => {
 
     coursesModel
       .find({ title: regexTerm, isBocked: false })
+      .populate("comments")
+      .populate({ path: "creator", select: "name avatar" })
       .then((result) => {
         res.status(200).json(result);
       })
@@ -68,7 +70,7 @@ const getCourseByCategory = (req, res) => {
     coursesModel
       .find({ category, isBocked: false })
       .populate("comments")
-      .populate({ path: "creator", select: "name" })
+      .populate({ path: "creator", select: "name avatar" })
       .then((result) => {
         res.status(200).json(result);
       })
