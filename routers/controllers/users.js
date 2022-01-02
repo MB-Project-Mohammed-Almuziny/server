@@ -249,7 +249,16 @@ const getUserInfo = (req, res) => {
       })
       .then((result) => {
         if (result && result[0]) {
-          const info = (({ name, email, headline, about, course, enrole }) => ({
+          const info = (({
+            avatar,
+            name,
+            email,
+            headline,
+            about,
+            course,
+            enrole,
+          }) => ({
+            avatar,
             name,
             email,
             headline,

@@ -45,7 +45,8 @@ const getUserChats = (req, res) => {
     const { userId } = req.params;
 
     chatsModel
-      .find({ $or: [{ user1: userId }, { user1: userId }] })
+      .find({ $or: [{ user1: userId }, { user2: userId }] })
+      .populate({ path: "user1 user2", select: "name avatar" })
       .then((result) => {
         res.status(200).json(result);
       })
