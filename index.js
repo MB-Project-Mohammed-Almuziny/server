@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
+const socket = require("socket.io");
 require("dotenv").config();
 
 require("./db");
@@ -27,6 +28,29 @@ app.use("/chats", chatsRouter);
 app.use("/reviews", reviewsRouter);
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`SERVER ON ${PORT}`);
+});
+
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("socket connect");
+
+  socket.on("join_room", (data) => {
+    socket.join(data.room);
+    console.log(`${data.userName} has entered the room number ${data.room}`);
+  });
+
+  socket.on("send_message", (data) => {
+    socket.to(data.room).emit("recieve_message", {
+      userName: data.userName,
+      content: data.content,
+    });
+  });
 });
