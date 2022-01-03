@@ -155,8 +155,13 @@ const getCourseById = (req, res) => {
       })
       .populate({ path: "creator", select: "name avatar" })
       .then((result) => {
-        if (result) res.status(200).json(result);
-        else res.status(404).json({ error: " course not found" });
+        if (result) {
+          result.comments = result.comments.filter(
+            (comment) => comment.isBocked === false
+          );
+
+          res.status(200).json(result);
+        } else res.status(404).json({ error: " course not found" });
       })
       .catch((err) => {
         res.status(400).json({ error: err.message });
