@@ -74,4 +74,43 @@ const getChatById = (req, res) => {
   }
 };
 
-module.exports = { sendMessage, getUserChats, getChatById };
+const checkChatRoom = (req, res) => {
+  try {
+    const { user1, user2 } = req.body;
+
+    console.log(user2);
+
+    chatsModel
+      .findOne({
+        $or: [{ user1: user2 }, { user1: user2 }],
+        $or: [{ user2: user1 }, { user2: user1 }],
+      })
+      .then((result) => {
+        if (result) {
+          res.status(200).json(result);
+        } else {
+          console.log(user1, user2);
+          const newChatRoom = new chatsModel({
+            user1,
+            user2,
+          });
+
+          newChatRoom
+            .save()
+            .then((result) => {
+              res.status(201).json(result);
+            })
+            .catch((err) => {
+              res.status(400).json({ error: err.message });
+            });
+        }
+      })
+      .catch((err) => {
+        res.status(400).json({ message: err.message });
+      });
+  } catch (err) {
+    res.status(400).json({ err: err.message });
+  }
+};
+
+module.exports = { sendMessage, getUserChats, getChatById, checkChatRoom };
