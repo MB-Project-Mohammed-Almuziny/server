@@ -5,6 +5,7 @@ const socket = require("socket.io");
 require("dotenv").config();
 
 require("./db");
+const chatsModel = require("./db/models/chats");
 
 const userRouter = require("./routers/routes/users");
 const rolesRouter = require("./routers/routes/roles");
@@ -48,9 +49,19 @@ io.on("connection", (socket) => {
   });
 
   socket.on("send_message", (data) => {
-    socket.to(data.room).emit("recieve_message", {
-      userName: data.userName,
-      content: data.content,
-    });
+    chatsModel
+      .findByIdAndUpdate(
+        data.room,
+        {
+          $push: { messages: { content: data.content, sender: data.sender } },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        io.to(data.room).emit("recieve_message", result.messages);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 });
