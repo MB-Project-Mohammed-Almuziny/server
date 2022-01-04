@@ -14,7 +14,7 @@ const courses = new mongoose.Schema({
   students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
   lessonSections: [
     {
-      sectionName: { type: String, required: true, unique: true },
+      sectionName: { type: String, required: true },
       lessons: [
         {
           lessonName: { type: String, required: true },
