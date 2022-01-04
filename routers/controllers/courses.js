@@ -160,6 +160,13 @@ const getCourseById = (req, res) => {
             (comment) => comment.isBocked === false
           );
 
+          result.comments.forEach(
+            (_, i) =>
+              (result.comments[i].replays = result.comments[i].replays.filter(
+                (reply) => reply.isBocked === false
+              ))
+          );
+
           res.status(200).json(result);
         } else res.status(404).json({ error: " course not found" });
       })
