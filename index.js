@@ -28,7 +28,7 @@ app.use("/replys", replysRouter);
 app.use("/chats", chatsRouter);
 app.use("/reviews", reviewsRouter);
 
-app.get("/", (req, res) => {
+app.get("/",  (req, res) => {
   res.send("<h1> hello world! </h1>");
 });
 
