@@ -29,7 +29,7 @@ app.use("/chats", chatsRouter);
 app.use("/reviews", reviewsRouter);
 
 app.get("/",  (req, res) => {
-  res.send("<h1> hello world! </h1>");
+  res.send("hello world!")
 });
 
 const PORT = process.env.PORT || 5000;
