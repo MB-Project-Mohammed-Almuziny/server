@@ -1,6 +1,6 @@
 {
   "name": "server",
-  "version": "1.1.0",
+  "version": "1.0.0",
   "description": "- express\r - cors\r - morgan\r - dotenv\r - mongoose\r - bcrypt\r - jsonwebtoken",
   "main": "index.js",
   "engines": {
