@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-const socket = require("socket.io");
+// const socket = require("socket.io");
 require("dotenv").config();
 
 require("./db");
-const chatsModel = require("./db/models/chats");
+// const chatsModel = require("./db/models/chats");
 
 const userRouter = require("./routers/routes/users");
 const rolesRouter = require("./routers/routes/roles");
