@@ -1,11 +1,11 @@
 const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
-// const socket = require("socket.io");
+const socket = require("socket.io");
 require("dotenv").config();
 
 require("./db");
-// const chatsModel = require("./db/models/chats");
+const chatsModel = require("./db/models/chats");
 
 const userRouter = require("./routers/routes/users");
 const rolesRouter = require("./routers/routes/roles");
@@ -33,40 +33,39 @@ app.get("/",  (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-// const server = 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`SERVER ON ${PORT}`);
 });
 
-// const io = socket(server, {
-//   cors: {
-//     origin: "http://localhost:3000",
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//   },
-// });
+const io = socket(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  },
+});
 
-// io.on("connection", (socket) => {
-//   console.log("socket connect");
+io.on("connection", (socket) => {
+  console.log("socket connect");
 
-//   socket.on("join_room", (data) => {
-//     socket.join(data.room);
-//     console.log(`${data.userName} has entered the room number ${data.room}`);
-//   });
+  socket.on("join_room", (data) => {
+    socket.join(data.room);
+    console.log(`${data.userName} has entered the room number ${data.room}`);
+  });
 
-//   socket.on("send_message", (data) => {
-//     chatsModel
-//       .findByIdAndUpdate(
-//         data.room,
-//         {
-//           $push: { messages: { content: data.content, sender: data.sender } },
-//         },
-//         { new: true }
-//       )
-//       .then((result) => {
-//         io.to(data.room).emit("recieve_message", result.messages);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//       });
-//   });
-// });
+  socket.on("send_message", (data) => {
+    chatsModel
+      .findByIdAndUpdate(
+        data.room,
+        {
+          $push: { messages: { content: data.content, sender: data.sender } },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        io.to(data.room).emit("recieve_message", result.messages);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+});
