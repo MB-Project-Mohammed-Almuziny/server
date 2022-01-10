@@ -1,4 +1,4 @@
-const rolesModel = require("../../db/models/roles");
+const rolesModel = require("./../../db/models/roles");
 
 const createRole = (req, res) => {
   try {
