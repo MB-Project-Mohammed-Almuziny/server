@@ -4,7 +4,8 @@
   "description": "- express\r - cors\r - morgan\r - dotenv\r - mongoose\r - bcrypt\r - jsonwebtoken",
   "main": "index.js",
   "engines": {
-    "node": "14.16.0"
+    "node": "16.13.0",
+    "npm": "8.3.0"
   },
   "scripts": {
     "start": "node index.js",
