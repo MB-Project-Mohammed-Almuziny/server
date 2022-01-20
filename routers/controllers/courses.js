@@ -22,6 +22,8 @@ const createCourse = (req, res) => {
     const { thumbnail, title, about, description, creator, category } =
       req.body;
 
+      console.log(thumbnail, title, about, description, creator, category);
+
     const newCourse = coursesModel({
       thumbnail,
       title,
